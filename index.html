@@ -3,103 +3,109 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Clean Your Email List · Javier Martinez</title>
+<title>Clean Your Email List · Brandridge</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* Whiteboard teaching register (approved on the RIG Marketing Machine deck) */
-  --paper:#F6F5F1;
-  --card:#FFFFFF;
-  --ink:#0B1220;
-  --t2:#36414F;
-  --t3:#5D6878;
-  --t4:#8B95A3;
-  --line:rgba(11,18,32,.16);
-  --line-2:rgba(11,18,32,.09);
-  --hl:rgba(246,196,64,.78);
-  --hl-solid:#F6C440;
-  --pen:#1F56C4;
-  --alarm:#E2433A;
-  --night:#0B1220;
-  --night-2:#141C2B;
-  --head:"Inter Tight",Inter,system-ui,sans-serif;
+  /* Brandridge: sampled from the logo */
+  --blue:#001DFB;      /* gradient start, deep */
+  --mid:#0181FC;       /* gradient middle */
+  --cyan:#0AEBFF;      /* gradient end */
+  --navy:#030D30;      /* the ridge stripe */
+  --grad:linear-gradient(120deg,var(--blue) 0%,var(--mid) 52%,var(--cyan) 100%);
+  --grad-text:linear-gradient(100deg,#0A6BFD 0%,var(--mid) 30%,var(--cyan) 100%);
+  /* Neutral ramp on true black */
+  --ground:#000000;
+  --s1:#07090F;
+  --s2:#0C1019;
+  --line:rgba(255,255,255,.09);
+  --line-2:rgba(255,255,255,.06);
+  --t1:#FFFFFF;
+  --t2:rgba(255,255,255,.72);
+  --t3:rgba(255,255,255,.5);
+  --t4:rgba(255,255,255,.34);
+  --alarm:#FF4D4F;
+  --good:#0AEBFF;
+  --head:"Outfit",Inter,system-ui,sans-serif;
   --sans:"Inter",system-ui,-apple-system,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
-  --hand:"Caveat","Bradley Hand",cursive;
+  --serif:"Instrument Serif",Georgia,serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:#05080F;overflow:hidden}
+html,body{height:100%;background:#000;overflow:hidden}
 body{font-family:var(--sans);color:var(--t2);-webkit-font-smoothing:antialiased}
 
 #viewport{position:fixed;inset:0}
 #stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:0 0}
-#progress{position:fixed;left:0;top:0;height:4px;background:var(--hl-solid);z-index:5;transition:width .4s cubic-bezier(.2,.7,.2,1)}
+#progress{position:fixed;left:0;top:0;height:3px;background:var(--grad);z-index:5;transition:width .4s cubic-bezier(.2,.7,.2,1)}
 
-.slide{position:absolute;inset:0;background:var(--paper);overflow:hidden;opacity:0;visibility:hidden;transition:opacity .45s cubic-bezier(.2,.7,.2,1),visibility 0s linear .45s}
-.slide.active{opacity:1;visibility:visible;transition:opacity .45s cubic-bezier(.2,.7,.2,1)}
-.slide.dark{background:var(--night);color:rgba(255,255,255,.78)}
-.slide:not(.dark)::before{content:"";position:absolute;inset:0;background:radial-gradient(1200px 800px at 12% -10%,#fff,rgba(255,255,255,0) 60%);pointer-events:none}
+.slide{position:absolute;inset:0;background:var(--ground);overflow:hidden;opacity:0;visibility:hidden;transition:opacity .5s cubic-bezier(.2,.7,.2,1),visibility 0s linear .5s}
+.slide.active{opacity:1;visibility:visible;transition:opacity .5s cubic-bezier(.2,.7,.2,1)}
+/* the logo's own light: one soft blue bloom, top right */
+.slide::before{content:"";position:absolute;right:-420px;top:-520px;width:1300px;height:1100px;background:radial-gradient(closest-side,rgba(1,129,252,.20),rgba(0,29,251,.07) 55%,rgba(0,0,0,0) 100%);pointer-events:none}
+.slide.dark::before{display:none}
 
-.rise{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.rise{opacity:0;transform:translateY(18px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
 .slide.active .rise{opacity:1;transform:none}
 .slide.active .d1{transition-delay:.08s}.slide.active .d2{transition-delay:.18s}.slide.active .d3{transition-delay:.28s}
 .slide.active .d4{transition-delay:.38s}.slide.active .d5{transition-delay:.48s}.slide.active .d6{transition-delay:.58s}
 .slide.active .d7{transition-delay:.68s}.slide.active .d8{transition-delay:.78s}
-@media (prefers-reduced-motion:reduce){.slide,.rise,.bar i,.ba i{transition:none!important}}
+@media (prefers-reduced-motion:reduce){.slide,.rise,.bar i,.ba i,.decay .col i{transition:none!important}}
 
 .pad{position:absolute;inset:0;padding:120px 150px 130px}
-.eb{font:600 17px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--t3);display:flex;align-items:center;gap:18px}
-.eb::before{content:"";width:44px;height:4px;border-radius:2px;background:var(--hl-solid)}
-.dark .eb{color:rgba(255,255,255,.6)}
+.eb{font:500 16px/1 var(--mono);letter-spacing:.24em;text-transform:uppercase;color:var(--t3);display:flex;align-items:center;gap:18px}
+.eb::before{content:"";width:40px;height:2px;border-radius:2px;background:var(--grad)}
 
-.head{font-family:var(--head);font-weight:800;letter-spacing:-.035em;line-height:1.02;color:var(--ink);margin-top:34px;text-wrap:balance}
-.head em{font-style:normal;color:var(--ink);padding:0 .1em;margin:0 -.04em;border-radius:.12em;-webkit-box-decoration-break:clone;box-decoration-break:clone;
-  background:linear-gradient(100deg,rgba(246,196,64,0) .5%,var(--hl) 2%,rgba(246,196,64,.62) 50%,var(--hl) 97%,rgba(246,196,64,0) 99.5%) 0 62%/100% 74% no-repeat}
-.dark .head{color:#fff}
-.dark .head em{background:none;color:var(--hl-solid);padding:0;margin:0}
-.sub{font-size:34px;line-height:1.42;color:var(--t2);margin-top:30px;max-width:1100px}
-.sub b{color:var(--ink);font-weight:600}
-.dark .sub{color:rgba(255,255,255,.74)}
-.dark .sub b{color:#fff}
-.hand{font-family:var(--hand);font-weight:600;color:var(--pen);line-height:1.08}
+.head{font-family:var(--head);font-weight:700;letter-spacing:-.035em;line-height:1.02;color:var(--t1);margin-top:34px;text-wrap:balance}
+.head em{font-style:normal;background:var(--grad-text);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-box-decoration-break:clone;box-decoration-break:clone;padding-bottom:.06em}
+.sub{font-size:33px;line-height:1.45;color:var(--t2);margin-top:30px;max-width:1100px}
+.sub b{color:var(--t1);font-weight:600}
+.hand{font-family:var(--serif);font-style:italic;font-weight:400;color:rgba(255,255,255,.86);line-height:1.12;letter-spacing:-.005em}
 
-.foot{position:absolute;left:150px;right:150px;bottom:54px;display:flex;align-items:center;justify-content:space-between;font:600 15px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--t4)}
+.foot{position:absolute;left:150px;right:150px;bottom:54px;display:flex;align-items:center;justify-content:space-between;font:500 14px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--t4)}
+.foot .brand{display:flex;align-items:center;gap:12px}
+.foot .brand img:first-child{height:26px}
+.foot .brand img:last-child{height:17px;opacity:.82}
 .foot .n{color:var(--t3)}
-.dark .foot{color:rgba(255,255,255,.4)}
-.dark .foot .n{color:rgba(255,255,255,.6)}
 
-/* hand-drawn icon tiles: paper card, ink border, hard offset shadow */
-.tile{width:132px;height:132px;flex:none;border:3px solid var(--ink);border-radius:18px;box-shadow:7px 7px 0 var(--ink);display:flex;align-items:center;justify-content:center;background:#fff}
-.tile svg{width:60%;height:60%;fill:none;stroke:var(--ink);stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
-.tile svg .f{fill:var(--ink)}
-.tile.blue{background:#DCE8FB}.tile.yellow{background:#FCEFC4}.tile.green{background:#DDF1DC}.tile.pink{background:#F9DDE2}
-.tile.green svg .f{fill:#2FA84F}
+/* icon tiles: navy plate, hairline, brand-lit stroke */
+.tile{width:124px;height:124px;flex:none;border:1px solid rgba(10,235,255,.22);border-radius:30px;background:linear-gradient(160deg,#0A1A4A 0%,var(--navy) 70%);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 20px 50px -20px rgba(1,129,252,.55);display:flex;align-items:center;justify-content:center}
+.tile svg{width:52%;height:52%;fill:none;stroke:var(--cyan);stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round}
+.tile svg .f{fill:var(--cyan)}
+.tile.pink{border-color:rgba(255,77,79,.3);background:linear-gradient(160deg,#3A0E14 0%,#1A0609 70%);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 20px 50px -20px rgba(255,77,79,.45)}
+.tile.pink svg{stroke:var(--alarm)}
 .tile.pink svg .f{fill:var(--alarm)}
+
+.panel{background:linear-gradient(180deg,var(--s2),var(--s1));border:1px solid var(--line);border-radius:30px;box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 40px 90px -40px rgba(0,0,0,.9)}
 
 /* ---------- 1 · Title ---------- */
 .s-title .photo{position:absolute;right:0;top:0;bottom:0;width:1080px;background:url(assets/fridge-night.jpg) 42% 58%/cover}
-.s-title .photo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--night) 0,rgba(11,18,32,.6) 26%,rgba(11,18,32,0) 55%)}
+.s-title .photo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#000 0,rgba(0,0,0,.65) 26%,rgba(0,0,0,0) 55%)}
+.s-title .logo{display:flex;align-items:center;gap:22px}
+.s-title .logo img:first-child{height:64px}
+.s-title .logo img:last-child{height:40px}
 .s-title .copy{position:absolute;left:150px;top:0;bottom:0;width:1060px;display:flex;flex-direction:column;justify-content:center}
-.s-title .head{font-size:128px;line-height:.98;margin-top:40px}
-.s-title .head em{display:block;margin-top:10px}
-.s-title .sub{font-size:33px;max-width:880px;margin-top:44px}
-.s-title .by{position:absolute;left:150px;bottom:92px;display:flex;align-items:center;gap:20px;font-size:24px;color:rgba(255,255,255,.55)}
-.s-title .by span{width:48px;height:3px;border-radius:2px;background:var(--hl-solid)}
+.s-title .eb{margin-top:70px}
+.s-title .head{font-size:124px;line-height:.98;margin-top:34px}
+.s-title .head em{display:block;margin-top:8px}
+.s-title .sub{font-size:32px;max-width:860px;margin-top:40px}
+.s-title .by{position:absolute;left:150px;bottom:92px;display:flex;align-items:center;gap:20px;font-size:23px;color:var(--t3)}
+.s-title .by span{width:40px;height:2px;border-radius:2px;background:var(--grad)}
 .s-title .by strong{color:#fff;font-weight:600}
 
 /* ---------- 2 · Promise ---------- */
 .s-promise .head{font-size:112px;max-width:1500px}
 .s-promise .gets{display:flex;gap:80px;margin-top:120px}
 .s-promise .get{display:flex;align-items:center;gap:34px}
-.s-promise .get b{display:block;font:800 54px/1.05 var(--head);letter-spacing:-.03em;color:var(--ink)}
-.s-promise .get span{display:block;font-size:27px;color:var(--t3);margin-top:8px}
-.s-promise .hand{position:absolute;right:170px;bottom:150px;font-size:46px;transform:rotate(-3deg);text-align:right}
+.s-promise .get b{display:block;font:700 52px/1.05 var(--head);letter-spacing:-.03em;color:var(--t1)}
+.s-promise .get span{display:block;font-size:26px;color:var(--t3);margin-top:10px}
+.s-promise .hand{position:absolute;right:150px;bottom:150px;font-size:46px;text-align:right}
 
 /* ---------- Photo chapter openers ---------- */
-.s-open .bg{position:absolute;inset:0;background-size:cover;background-position:center}
-.s-open .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,18,32,.97) 0%,rgba(11,18,32,.9) 38%,rgba(11,18,32,.35) 70%,rgba(11,18,32,.1) 100%)}
+.s-open .bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:saturate(.85)}
+.s-open .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#000 0%,rgba(0,0,0,.92) 36%,rgba(0,0,0,.4) 70%,rgba(0,0,0,.15) 100%)}
 .s-open .copy{position:absolute;left:150px;top:0;bottom:0;width:1150px;display:flex;flex-direction:column;justify-content:center}
 .s-open .head{font-size:136px;line-height:.98;margin-top:40px}
 .s-open .head em{display:block}
@@ -107,64 +113,63 @@ body{font-family:var(--sans);color:var(--t2);-webkit-font-smoothing:antialiased}
 
 /* ---------- 4 · Decay bars ---------- */
 .s-decay .head{font-size:92px;max-width:1100px}
-.s-decay .wrap{display:grid;grid-template-columns:900px 1fr;gap:110px;margin-top:120px;align-items:end}
-.decay{position:relative;height:460px;display:grid;grid-template-columns:repeat(3,1fr);gap:46px;align-items:end;border-bottom:4px solid var(--ink);padding:0 30px}
+.s-decay .wrap{display:grid;grid-template-columns:900px 1fr;gap:110px;margin-top:110px;align-items:end}
+.decay{position:relative;height:420px;display:grid;grid-template-columns:repeat(3,1fr);gap:46px;align-items:end;border-bottom:1px solid rgba(255,255,255,.22);padding:0 30px}
 .decay .col{position:relative;height:100%;display:flex;flex-direction:column;justify-content:flex-end}
-.decay .col i{display:block;height:0;border:3px solid var(--ink);border-bottom:0;border-radius:16px 16px 0 0;background:#DCE8FB;transition:height 1.1s cubic-bezier(.2,.7,.2,1) .35s}
-.decay .col:nth-child(3) i{background:#E9EEF5;transition-delay:.55s}
-.decay .col:nth-child(4) i{background:#F9DDE2;transition-delay:.75s}
+.decay .col i{display:block;height:0;border-radius:22px 22px 4px 4px;background:var(--grad);box-shadow:0 30px 80px -30px rgba(1,129,252,.7);transition:height 1.1s cubic-bezier(.2,.7,.2,1) .35s}
+.decay .col:nth-child(3) i{background:linear-gradient(180deg,#0B2A8E,#061650);box-shadow:none;transition-delay:.55s}
+.decay .col:nth-child(4) i{background:linear-gradient(180deg,#2A1016,#14070A);border:1px solid rgba(255,77,79,.35);box-shadow:none;transition-delay:.75s}
 .slide.active .decay .col i{height:var(--h)}
-.decay .col b{display:block;text-align:center;font:800 54px/1 var(--head);letter-spacing:-.04em;color:var(--ink);margin-bottom:16px}
+.decay .col b{display:block;text-align:center;font:700 56px/1 var(--head);letter-spacing:-.04em;color:var(--t1);margin-bottom:18px}
 .decay .col:nth-child(4) b{color:var(--alarm)}
-.decay .col span{position:absolute;left:0;right:0;bottom:-58px;text-align:center;font:700 26px/1 var(--head);color:var(--ink);letter-spacing:-.01em}
-.decay .yl{position:absolute;left:0;top:-64px;font:600 15px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--t3)}
+.decay .col span{position:absolute;left:0;right:0;bottom:-58px;text-align:center;font:500 24px/1 var(--sans);color:var(--t3)}
+.decay .yl{position:absolute;left:0;top:-64px;font:500 14px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--t3)}
 .s-decay .why{padding-bottom:30px}
-.s-decay .why p{font-size:38px;line-height:1.3;color:var(--ink);font-weight:500}
-.s-decay .why .dn{display:block;font:800 60px/1 var(--head);color:var(--alarm);margin:22px 0}
+.s-decay .why p{font-size:38px;line-height:1.3;color:var(--t1);font-weight:500}
+.s-decay .why .dn{display:block;font:700 56px/1 var(--head);color:var(--alarm);margin:22px 0}
 .s-decay .why .r{color:var(--alarm);font-weight:700}
-.s-decay .why .u{text-decoration:underline;text-decoration-color:var(--alarm);text-decoration-thickness:4px;text-underline-offset:8px}
-.s-decay .hand{font-size:50px;margin-top:54px;transform:rotate(-2deg);transform-origin:left}
+.s-decay .why .u{text-decoration:underline;text-decoration-color:var(--alarm);text-decoration-thickness:3px;text-underline-offset:8px}
+.s-decay .hand{font-size:52px;margin-top:54px}
 
 /* ---------- 5 · Fridge ---------- */
 .s-fridge .copy{position:absolute;left:150px;top:120px;width:960px}
 .s-fridge .head{font-size:116px}
 .s-fridge .sub{font-size:38px;max-width:860px;margin-top:44px}
-.s-fridge .hand.big{font-size:52px;margin-top:70px;max-width:760px;transform:rotate(-2deg);transform-origin:left}
+.s-fridge .hand.big{font-size:54px;margin-top:70px;max-width:760px}
 .s-fridge .art{position:absolute;right:150px;top:110px;width:620px;height:840px}
-.s-fridge .art svg{width:100%;height:100%;overflow:visible}
-.s-fridge .tag{position:absolute;font-family:var(--hand);font-weight:600;font-size:36px;line-height:1;white-space:nowrap}
-.s-fridge .tag.ok{color:#2F8F46}
+.s-fridge .art svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 40px 80px rgba(1,129,252,.25))}
+.s-fridge .tag{position:absolute;font-family:var(--serif);font-style:italic;font-size:36px;line-height:1;white-space:nowrap}
+.s-fridge .tag.ok{color:var(--cyan)}
 .s-fridge .tag.bad{color:var(--alarm)}
 
 /* ---------- 6 · What's happening ---------- */
 .s-now .head{font-size:92px}
-.grid4{display:grid;grid-template-columns:1fr 1fr;gap:40px 46px;margin-top:66px}
-.g4{position:relative;display:flex;gap:40px;align-items:center;background:var(--card);border:3px solid var(--ink);border-radius:24px;box-shadow:8px 8px 0 var(--ink);padding:38px 44px}
-.g4 .tile{width:112px;height:112px;box-shadow:none;border-width:3px}
-.g4 h3{font:800 46px/1.02 var(--head);letter-spacing:-.03em;color:var(--ink)}
-.g4 p{font-size:25px;line-height:1.4;color:var(--t2);margin-top:12px}
-.g4 .pill{position:absolute;right:28px;top:-20px;font:600 14px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;background:var(--ink);color:#fff;padding:10px 14px;border-radius:8px}
+.grid4{display:grid;grid-template-columns:1fr 1fr;gap:34px 34px;margin-top:66px}
+.g4{position:relative;display:flex;gap:40px;align-items:center;background:linear-gradient(180deg,var(--s2),var(--s1));border:1px solid var(--line);border-radius:30px;box-shadow:inset 0 1px 0 rgba(255,255,255,.05);padding:40px 44px}
+.g4 .tile{width:108px;height:108px;border-radius:26px}
+.g4 h3{font:700 44px/1.02 var(--head);letter-spacing:-.03em;color:var(--t1)}
+.g4 p{font-size:24px;line-height:1.45;color:var(--t2);margin-top:12px}
+.g4 .pill{position:absolute;right:30px;top:30px;font:500 13px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--t3);border:1px solid var(--line);padding:9px 12px;border-radius:999px}
 
 /* ---------- 7 · Cycle ---------- */
 .s-cycle .copy{position:absolute;left:150px;top:120px;width:600px}
 .s-cycle .head{font-size:100px}
-.s-cycle .warn{margin-top:64px;background:var(--card);border:3px solid var(--alarm);border-radius:22px;box-shadow:8px 8px 0 var(--alarm);padding:34px 38px}
-.s-cycle .warn b{display:block;font:800 36px/1.1 var(--head);letter-spacing:-.02em;color:var(--alarm)}
+.s-cycle .warn{margin-top:64px;background:linear-gradient(180deg,#1A080B,#0D0406);border:1px solid rgba(255,77,79,.35);border-radius:26px;padding:34px 38px}
+.s-cycle .warn b{display:block;font:700 36px/1.1 var(--head);letter-spacing:-.02em;color:var(--alarm)}
 .s-cycle .warn p{font-size:26px;line-height:1.4;color:var(--t2);margin-top:12px}
-.s-cycle .hand{font-size:44px;margin-top:56px;transform:rotate(-2deg);transform-origin:left}
+.s-cycle .hand{font-size:46px;margin-top:56px}
 .cyc{position:absolute;left:880px;top:200px;width:1100px;height:760px;transform:scale(.85);transform-origin:0 0}
 .cyc svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.cyc .arc{fill:none;stroke:var(--ink);stroke-width:5;stroke-linecap:round;stroke-dasharray:1 0}
-.cyc .node{position:absolute;width:96px;height:96px;margin:-48px 0 0 -48px;border:3px solid var(--ink);border-radius:50%;background:#fff;box-shadow:5px 5px 0 var(--ink);display:flex;align-items:center;justify-content:center}
-.cyc .node svg{position:static;width:50%;height:50%;fill:none;stroke:var(--ink);stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
-.cyc .node svg .f{fill:var(--alarm);stroke:none}
-.cyc .lb{position:absolute;font-size:35px;line-height:1.22;color:var(--ink);width:280px}
+.cyc .arc{fill:none;stroke:rgba(255,255,255,.75);stroke-width:4;stroke-linecap:round}
+.cyc .node{position:absolute;width:96px;height:96px;margin:-48px 0 0 -48px;border:1px solid rgba(10,235,255,.3);border-radius:50%;background:linear-gradient(160deg,#0A1A4A,var(--navy));box-shadow:0 14px 40px -14px rgba(1,129,252,.7);display:flex;align-items:center;justify-content:center}
+.cyc .node svg{position:static;width:48%;height:48%;fill:none;stroke:var(--cyan);stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.cyc .lb{position:absolute;font-size:35px;line-height:1.22;color:var(--t1);width:280px}
 .cyc .lb b{color:var(--alarm);font-weight:700}
 .cyc .lb.r{text-align:left}
 .cyc .lb.l{text-align:right}
-.cyc .core{position:absolute;left:550px;top:380px;width:250px;height:250px;margin:-125px 0 0 -125px;border-radius:50%;background:var(--alarm);border:4px solid var(--ink);box-shadow:8px 8px 0 var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff}
-.cyc .core small{font:600 15px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;opacity:.85}
-.cyc .core b{font:800 44px/1 var(--head);letter-spacing:-.03em;margin-top:12px}
+.cyc .core{position:absolute;left:550px;top:380px;width:250px;height:250px;margin:-125px 0 0 -125px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FF6B6D,#C81E2A 70%);box-shadow:0 0 0 14px rgba(255,77,79,.08),0 30px 90px -20px rgba(255,77,79,.6);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff}
+.cyc .core small{font:500 14px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+.cyc .core b{font:700 44px/1 var(--head);letter-spacing:-.03em;margin-top:12px}
 .slide.active .cyc .spin{animation:spin 26s linear infinite;transform-origin:550px 380px}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){.slide.active .cyc .spin{animation:none}}
@@ -173,143 +178,142 @@ body{font-family:var(--sans);color:var(--t2);-webkit-font-smoothing:antialiased}
 .s-vs .head{font-size:96px;text-align:center;margin-top:20px}
 .vs{display:grid;grid-template-columns:1fr 160px 1fr;align-items:center;margin-top:90px}
 .vs .side{display:flex;flex-direction:column;align-items:center;text-align:center}
-.vs .num{font:800 200px/1 var(--head);letter-spacing:-.05em;color:var(--ink)}
-.vs .lbl{font:600 18px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--t3);margin-top:20px}
+.vs .num{font:700 200px/1 var(--head);letter-spacing:-.05em;color:var(--t1)}
+.vs .lbl{font:500 17px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--t3);margin-top:22px}
 .vs .say{font-size:34px;line-height:1.35;margin-top:42px;color:var(--t2)}
-.vs .say b{color:var(--ink);font-weight:700}
-.vs .win{position:relative;background:var(--card);border:4px solid var(--ink);border-radius:30px;box-shadow:12px 12px 0 var(--ink);padding:64px 40px 56px}
-.vs .win .num{position:relative;display:inline-block}
-.vs .win .num::after{content:"";position:absolute;left:-14px;right:-14px;top:52%;height:44%;background:var(--hl);border-radius:10px;z-index:-1}
-.vs .win .num{z-index:0}
-.vs .lose{padding:64px 40px 56px;opacity:.9}
-.vs .lose .num{color:#B8BFCA}
-.vs .mid{font:700 44px/1 var(--head);color:var(--t4);text-align:center}
-.s-vs .hand{position:absolute;left:330px;bottom:118px;font-size:48px;transform:rotate(-3deg)}
+.vs .say b{color:var(--t1);font-weight:600}
+.vs .win{position:relative;border-radius:36px;padding:64px 40px 56px;background:linear-gradient(180deg,#0A1A4A,var(--navy) 60%,#020718);border:1px solid rgba(10,235,255,.28);box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 50px 120px -40px rgba(1,129,252,.65)}
+.vs .win .num{background:var(--grad-text);-webkit-background-clip:text;background-clip:text;color:transparent}
+.vs .lose{padding:64px 40px 56px}
+.vs .lose .num{color:rgba(255,255,255,.16)}
+.vs .lose .say{color:var(--t3)}
+.vs .mid{font:500 40px/1 var(--serif);font-style:italic;color:var(--t4);text-align:center}
+.s-vs .hand{position:absolute;left:330px;bottom:118px;font-size:48px}
 
-/* ---------- 9 · Fix opener (dark, typographic) ---------- */
-.s-fix .copy{position:absolute;left:150px;top:0;bottom:0;width:1620px;display:flex;flex-direction:column;justify-content:center}
-.s-fix .head{font-size:150px;line-height:.98}
-.s-fix .sub{font-size:36px;max-width:1150px;margin-top:46px}
-.s-fix .two{display:flex;gap:40px;margin-top:80px}
-.s-fix .two div{display:flex;align-items:center;gap:26px;padding:26px 40px 26px 26px;border:2px solid rgba(255,255,255,.18);border-radius:22px;font:700 34px/1 var(--head);letter-spacing:-.02em;color:#fff}
-.s-fix .two i{font-style:normal;width:64px;height:64px;border-radius:16px;background:var(--hl-solid);color:var(--ink);display:flex;align-items:center;justify-content:center;font:800 34px/1 var(--head)}
+/* ---------- 9 · Fix opener ---------- */
+.s-fix .glow{position:absolute;right:-330px;top:100px;width:800px;opacity:.9}
+.s-fix .glow img{width:100%;display:block;filter:drop-shadow(0 0 120px rgba(1,129,252,.45))}
+.s-fix .copy{position:absolute;left:150px;top:0;bottom:0;width:1200px;display:flex;flex-direction:column;justify-content:center}
+.s-fix .head{font-size:146px;line-height:.98}
+.s-fix .sub{font-size:35px;max-width:1000px;margin-top:46px}
+.s-fix .two{display:flex;gap:28px;margin-top:80px}
+.s-fix .two div{display:flex;align-items:center;gap:22px;padding:22px 36px 22px 22px;border:1px solid var(--line);background:rgba(255,255,255,.03);border-radius:999px;font:600 30px/1 var(--head);letter-spacing:-.01em;color:#fff}
+.s-fix .two i{font-style:normal;width:56px;height:56px;border-radius:50%;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font:700 28px/1 var(--head)}
 
 /* ---------- 10 / 11 · Thing 1, Thing 2 ---------- */
-.thing .ghost{position:absolute;right:120px;top:40px;font:800 640px/1 var(--head);letter-spacing:-.06em;color:rgba(11,18,32,.05)}
+.thing .ghost{position:absolute;right:110px;top:20px;font:700 680px/1 var(--head);letter-spacing:-.06em;color:transparent;-webkit-text-stroke:2px rgba(10,235,255,.09)}
 .thing .copy{position:absolute;left:150px;top:120px;width:780px}
 .thing .head{font-size:98px}
 .thing .sub{font-size:33px;max-width:760px}
-.s-t1 .quote{margin-top:46px;font-family:var(--hand);font-weight:600;font-size:54px;line-height:1.1;color:var(--pen);transform:rotate(-2deg);transform-origin:left}
-.inbox{position:absolute;right:150px;top:200px;width:760px;background:var(--card);border:4px solid var(--ink);border-radius:28px;box-shadow:12px 12px 0 var(--ink);overflow:hidden}
-.inbox .bar{display:flex;align-items:center;gap:12px;padding:24px 30px;border-bottom:3px solid var(--ink);background:#F1EFE8}
-.inbox .bar i{width:16px;height:16px;border-radius:50%;border:3px solid var(--ink)}
-.inbox .bar span{margin-left:16px;font:600 15px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--t3)}
-.mail{display:grid;grid-template-columns:72px 1fr;gap:24px;padding:34px 34px;border-bottom:2px solid var(--line-2);align-items:center}
+.s-t1 .quote{margin-top:46px;font-family:var(--serif);font-style:italic;font-size:62px;line-height:1.08;color:#fff}
+.inbox{position:absolute;right:150px;top:200px;width:760px;overflow:hidden}
+.inbox .bar{display:flex;align-items:center;gap:10px;padding:24px 30px;border-bottom:1px solid var(--line)}
+.inbox .bar i{width:13px;height:13px;border-radius:50%;background:rgba(255,255,255,.16)}
+.inbox .bar span{margin-left:16px;font:500 14px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--t3)}
+.mail{display:grid;grid-template-columns:68px 1fr;gap:26px;padding:34px;border-bottom:1px solid var(--line-2);align-items:center}
 .mail:last-child{border-bottom:0}
-.mail .no{width:72px;height:72px;border-radius:18px;border:3px solid var(--ink);display:flex;align-items:center;justify-content:center;font:800 32px/1 var(--head);color:var(--ink)}
-.mail:nth-child(2) .no{background:#DCE8FB}.mail:nth-child(3) .no{background:#FCEFC4}.mail:nth-child(4) .no{background:#F9DDE2}
-.mail b{display:block;font:700 32px/1.15 var(--head);letter-spacing:-.02em;color:var(--ink)}
-.mail p{font-size:23px;line-height:1.35;color:var(--t3);margin-top:8px}
+.mail .no{width:68px;height:68px;border-radius:50%;border:1px solid rgba(10,235,255,.3);background:linear-gradient(160deg,#0A1A4A,var(--navy));display:flex;align-items:center;justify-content:center;font:700 30px/1 var(--head);color:var(--cyan)}
+.mail:nth-child(4) .no{border-color:rgba(255,77,79,.35);background:linear-gradient(160deg,#3A0E14,#1A0609);color:var(--alarm)}
+.mail b{display:block;font:600 32px/1.15 var(--head);letter-spacing:-.02em;color:var(--t1)}
+.mail p{font-size:23px;line-height:1.4;color:var(--t3);margin-top:8px}
 
-.s-t2 .head em{margin-left:0}
-.s-t2 .rm{margin-top:30px;font-size:40px;color:var(--ink);font-weight:500}
-.s-t2 .rm b{font-weight:800;font-family:var(--head);letter-spacing:-.02em;background:linear-gradient(transparent 58%,var(--hl) 58%)}
-.ba{position:absolute;right:150px;top:150px;width:820px;background:var(--card);border:4px solid var(--ink);border-radius:28px;box-shadow:12px 12px 0 var(--ink);padding:44px 48px}
-.ba .cap{display:flex;justify-content:space-between;align-items:center;font:600 15px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--t3);padding-bottom:26px;border-bottom:2px solid var(--line-2)}
-.ba .cap b{color:var(--ink)}
-.ba .row{padding:24px 0 22px;border-bottom:2px solid var(--line-2)}
+.s-t2 .rm{margin-top:30px;font-size:40px;color:var(--t1);font-weight:500}
+.s-t2 .rm b{font-weight:700;font-family:var(--head);letter-spacing:-.02em;background:var(--grad-text);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ba{position:absolute;right:150px;top:150px;width:820px;padding:44px 48px}
+.ba .cap{display:flex;justify-content:space-between;align-items:center;font:500 14px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--t3);padding-bottom:26px;border-bottom:1px solid var(--line)}
+.ba .cap b{color:var(--t1);font-weight:500}
+.ba .row{padding:24px 0 22px;border-bottom:1px solid var(--line-2)}
 .ba .row:last-child{border-bottom:0;padding-bottom:0}
-.ba .row h4{font:700 26px/1 var(--head);letter-spacing:-.01em;color:var(--ink);display:flex;justify-content:space-between}
-.ba .row h4 span{font-family:var(--sans);font-weight:500;font-size:22px;color:var(--t3)}
+.ba .row h4{font:600 26px/1 var(--head);letter-spacing:-.01em;color:var(--t1);display:flex;justify-content:space-between}
+.ba .row h4 span{font-family:var(--sans);font-weight:400;font-size:21px;color:var(--t3)}
 .ba .pair{display:grid;grid-template-columns:120px 1fr 130px;gap:18px;align-items:center;margin-top:14px;font-size:21px;color:var(--t3)}
-.ba .pair .t{height:22px;border-radius:999px;background:#EEF0F3;overflow:hidden}
-.ba .pair i{display:block;height:100%;width:0;border-radius:999px;background:#B8BFCA;transition:width 1.1s cubic-bezier(.2,.7,.2,1) .4s}
-.ba .pair.after i{background:var(--ink)}
-.ba .pair.after.good i{background:#2FA84F}
+.ba .pair .t{height:14px;border-radius:999px;background:rgba(255,255,255,.06);overflow:hidden}
+.ba .pair i{display:block;height:100%;width:0;border-radius:999px;background:rgba(255,255,255,.3);transition:width 1.1s cubic-bezier(.2,.7,.2,1) .4s}
+.ba .pair.after i{background:#fff}
+.ba .pair.after.good i{background:var(--grad);box-shadow:0 0 24px rgba(10,235,255,.35)}
 .ba .pair.bad i{background:var(--alarm)}
 .slide.active .ba .pair i{width:var(--w)}
-.ba .pair .v{text-align:right;font:700 28px/1 var(--head);color:var(--t3)}
-.ba .pair.after .v{color:var(--ink);font-size:32px}
+.ba .pair .v{text-align:right;font:600 28px/1 var(--head);color:var(--t3)}
+.ba .pair.after .v{color:var(--t1);font-size:32px}
 .ba .note{margin-top:22px;font-size:18px;color:var(--t4)}
 
 /* ---------- 12 · Results ---------- */
 .s-res .head{font-size:100px;max-width:1500px}
 .res{display:grid;grid-template-columns:1fr 1fr;gap:0 110px;margin-top:70px;max-width:1520px}
-.res li{list-style:none;display:flex;align-items:center;gap:30px;padding:30px 0;border-top:2px solid var(--line)}
-.res li:nth-last-child(-n+2){border-bottom:2px solid var(--line)}
-.res li i{flex:none;width:58px;height:58px;border-radius:14px;border:3px solid var(--ink);background:#DDF1DC;display:flex;align-items:center;justify-content:center}
-.res li i svg{width:60%;height:60%;fill:none;stroke:var(--ink);stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.res li{list-style:none;display:flex;align-items:center;gap:30px;padding:30px 0;border-top:1px solid var(--line)}
+.res li:nth-last-child(-n+2){border-bottom:1px solid var(--line)}
+.res li i{flex:none;width:52px;height:52px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px -10px rgba(1,129,252,.8)}
+.res li i svg{width:50%;height:50%;fill:none;stroke:#fff;stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
 .res li span{font-size:34px;line-height:1.25;color:var(--t2)}
-.res li b{color:var(--ink);font-weight:700}
+.res li b{color:var(--t1);font-weight:600}
 
 /* ---------- 13 · Next step ---------- */
 .s-step .head{font-size:120px}
-.steps{margin-top:70px;display:grid;gap:26px;max-width:1300px}
-.steps li{list-style:none;display:grid;grid-template-columns:96px 1fr;gap:36px;align-items:center}
-.steps li i{font-style:normal;width:96px;height:96px;border:3px solid var(--ink);border-radius:22px;box-shadow:6px 6px 0 var(--ink);background:#fff;display:flex;align-items:center;justify-content:center;font:800 46px/1 var(--head);color:var(--ink)}
-.steps li:nth-child(1) i{background:#DCE8FB}.steps li:nth-child(2) i{background:#FCEFC4}.steps li:nth-child(3) i{background:#DDF1DC}
+.steps{margin-top:70px;display:grid;gap:30px;max-width:1300px}
+.steps li{list-style:none;display:grid;grid-template-columns:92px 1fr;gap:36px;align-items:center}
+.steps li i{font-style:normal;width:92px;height:92px;border-radius:50%;border:1px solid rgba(10,235,255,.3);background:linear-gradient(160deg,#0A1A4A,var(--navy));box-shadow:0 16px 40px -16px rgba(1,129,252,.7);display:flex;align-items:center;justify-content:center;font:700 40px/1 var(--head);color:var(--cyan)}
 .steps li span{font-size:44px;line-height:1.2;color:var(--t2)}
-.steps li b{color:var(--ink);font-weight:700}
-.steps li small{font-size:30px;color:var(--pen);font-family:var(--hand);font-weight:600;font-size:40px;margin-left:12px}
-.tip{position:absolute;left:150px;right:150px;bottom:140px;display:flex;align-items:center;gap:30px;background:var(--ink);color:rgba(255,255,255,.82);border-radius:22px;padding:30px 40px;font-size:30px}
-.tip em{font-style:normal;flex:none;font:600 15px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;background:var(--hl-solid);color:var(--ink);padding:12px 16px;border-radius:8px}
-.tip b{color:#fff}
+.steps li b{color:var(--t1);font-weight:600}
+.steps li small{font-family:var(--serif);font-style:italic;font-size:40px;color:var(--t3);margin-left:12px}
+.tip{position:absolute;left:150px;right:150px;bottom:140px;display:flex;align-items:center;gap:30px;border-radius:999px;padding:24px 40px 24px 24px;font-size:28px;color:var(--t2);background:linear-gradient(90deg,rgba(0,29,251,.22),rgba(10,235,255,.06));border:1px solid rgba(10,235,255,.22)}
+.tip em{font-style:normal;flex:none;font:500 14px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;background:var(--grad);color:#fff;padding:14px 18px;border-radius:999px}
+.tip b{color:#fff;font-weight:600}
 
 /* ---------- 14 · The prompt ---------- */
 .s-prompt .head{font-size:76px;margin-top:26px}
-.term{position:relative;margin-top:44px;background:var(--night);border:4px solid var(--ink);border-radius:28px;box-shadow:12px 12px 0 var(--hl-solid);padding:30px 56px 44px}
-.term .top{display:flex;align-items:center;gap:12px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.12)}
-.term .top i{width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,.22)}
-.term .top span{margin-left:16px;font:600 15px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5)}
-.term pre{margin-top:30px;font:500 27px/1.55 var(--mono);color:#E9EDF3;white-space:pre-wrap}
-.term pre .ph{color:var(--ink);background:var(--hl-solid);padding:0 .3em;border-radius:6px;font-weight:600}
-.term pre .q{color:#9FC0FF}
-.copybtn{position:absolute;right:40px;top:22px;display:flex;align-items:center;gap:12px;font:600 18px/1 var(--sans);color:var(--ink);background:var(--hl-solid);border:0;border-radius:12px;padding:14px 20px;cursor:pointer}
+.term{position:relative;margin-top:44px;padding:30px 56px 44px;background:linear-gradient(180deg,#070B18,#03050C);border:1px solid rgba(10,235,255,.2);border-radius:30px;box-shadow:0 50px 120px -50px rgba(1,129,252,.6),inset 0 1px 0 rgba(255,255,255,.06)}
+.term .top{display:flex;align-items:center;gap:10px;padding-bottom:24px;border-bottom:1px solid var(--line)}
+.term .top i{width:13px;height:13px;border-radius:50%;background:rgba(255,255,255,.16)}
+.term .top span{margin-left:16px;font:500 14px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--t3)}
+.term pre{margin-top:30px;font:500 27px/1.55 var(--mono);color:#E6ECF7;white-space:pre-wrap}
+.term pre .ph{color:#fff;background:var(--grad);padding:0 .3em;border-radius:6px;font-weight:600}
+.term pre .q{color:var(--cyan)}
+.copybtn{position:absolute;right:40px;top:20px;display:flex;align-items:center;gap:12px;font:600 18px/1 var(--sans);color:#fff;background:var(--grad);border:0;border-radius:999px;padding:14px 22px;cursor:pointer;box-shadow:0 10px 30px -10px rgba(1,129,252,.8)}
 .copybtn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
 
 /* ---------- 15 · Scorecard ---------- */
 .s-score .wrap{display:grid;grid-template-columns:1fr 780px;gap:100px;align-items:center;height:100%}
 .s-score .head{font-size:104px}
 .s-score .sub{font-size:34px}
-.s-score .hand{font-size:50px;margin-top:56px;transform:rotate(-2deg);transform-origin:left}
-.card-sc{background:var(--card);border:4px solid var(--ink);border-radius:28px;box-shadow:12px 12px 0 var(--ink);padding:46px 52px}
-.card-sc .cap{font:600 15px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--t3);padding-bottom:26px;border-bottom:2px solid var(--line-2)}
-.card-sc .row{padding:36px 0;border-bottom:2px solid var(--line-2)}
+.s-score .hand{font-size:52px;margin-top:56px}
+.card-sc{padding:46px 52px}
+.card-sc .cap{font:500 14px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--t3);padding-bottom:26px;border-bottom:1px solid var(--line)}
+.card-sc .row{padding:36px 0;border-bottom:1px solid var(--line-2)}
 .card-sc .row:last-child{border-bottom:0;padding-bottom:6px}
-.card-sc .row b{display:block;font:800 40px/1 var(--head);letter-spacing:-.025em;color:var(--ink)}
+.card-sc .row b{display:block;font:700 40px/1 var(--head);letter-spacing:-.025em;color:var(--t1)}
 .card-sc .fill{display:grid;grid-template-columns:1fr 1fr;gap:34px;margin-top:26px}
 .card-sc .fill div{font-size:22px;color:var(--t3)}
-.card-sc .fill div span{display:block;height:74px;margin-top:10px;border-bottom:3px solid var(--ink)}
-.card-sc .fill div:last-child span{background:linear-gradient(transparent 55%,rgba(246,196,64,.35) 55%)}
+.card-sc .fill div span{display:block;height:74px;margin-top:10px;border-bottom:1px solid rgba(255,255,255,.4)}
+.card-sc .fill div:last-child span{border-bottom:2px solid transparent;border-image:var(--grad) 1;background:linear-gradient(0deg,rgba(1,129,252,.12),rgba(1,129,252,0))}
 
 /* ---------- 16 · Excuses ---------- */
 .s-ex .head{font-size:78px;margin-top:26px}
-.ex{margin-top:46px;background:var(--card);border:4px solid var(--ink);border-radius:26px;box-shadow:10px 10px 0 var(--ink);overflow:hidden}
-.ex .r{display:grid;grid-template-columns:640px 1fr;border-bottom:2px solid var(--line-2)}
+.ex{margin-top:46px;overflow:hidden}
+.ex .r{display:grid;grid-template-columns:640px 1fr;border-bottom:1px solid var(--line-2)}
 .ex .r:last-child{border-bottom:0}
 .ex .r > div{padding:14px 36px;font-size:23px;line-height:1.35}
-.ex .r > div:first-child{font-weight:600;color:var(--ink);font-style:italic;border-right:2px solid var(--line-2);display:flex;align-items:center}
+.ex .r > div:first-child{font-family:var(--serif);font-style:italic;font-size:28px;color:var(--t1);border-right:1px solid var(--line-2);display:flex;align-items:center}
 .ex .r > div:last-child{color:var(--t2);display:block;align-self:center}
-.ex .r > div:last-child b{color:var(--ink);font-weight:600}
-.ex .hd > div{font:600 15px/1 var(--mono)!important;letter-spacing:.2em;text-transform:uppercase;font-style:normal!important;padding:22px 36px!important}
-.ex .hd > div:first-child{background:#F1EFE8;color:var(--t3)!important}
-.ex .hd > div:last-child{background:var(--hl-solid);color:var(--ink)!important}
+.ex .r > div:last-child b{color:var(--t1);font-weight:600}
+.ex .hd > div{font:500 14px/1 var(--mono)!important;letter-spacing:.2em;text-transform:uppercase;font-style:normal!important;padding:22px 36px!important}
+.ex .hd > div:first-child{color:var(--t3)!important;background:rgba(255,255,255,.02)}
+.ex .hd > div:last-child{background:var(--grad);color:#fff!important}
 
 /* ---------- 17 · Close ---------- */
-.s-close .copy{position:absolute;left:150px;top:0;bottom:0;width:1200px;display:flex;flex-direction:column;justify-content:center}
-.s-close .head{font-size:146px;line-height:.96}
+.s-close .mark{position:absolute;right:150px;top:226px;width:580px}
+.s-close .mark img{width:100%;display:block;filter:drop-shadow(0 0 140px rgba(1,129,252,.5))}
+.s-close .copy{position:absolute;left:150px;top:0;bottom:0;width:1100px;display:flex;flex-direction:column;justify-content:center}
+.s-close .head{font-size:140px;line-height:.96}
 .s-close .head em{display:block}
-.s-close .sub{font-size:36px;margin-top:46px;max-width:960px}
-.s-close .go{margin-top:56px;display:inline-flex;align-items:center;gap:20px;align-self:flex-start;background:var(--hl-solid);color:var(--ink);border-radius:999px;padding:26px 40px 26px 46px;font:700 34px/1 var(--head);letter-spacing:-.01em}
+.s-close .sub{font-size:35px;margin-top:46px;max-width:900px}
+.s-close .go{margin-top:56px;display:inline-flex;align-items:center;gap:20px;align-self:flex-start;background:var(--grad);color:#fff;border-radius:999px;padding:26px 40px 26px 46px;font:600 32px/1 var(--head);letter-spacing:-.01em;box-shadow:0 20px 60px -20px rgba(1,129,252,.9)}
 .s-close .go svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-.s-close .photo{position:absolute;right:0;top:0;bottom:0;width:820px;background:url(assets/fridge-night.jpg) 40% 60%/cover;opacity:.55}
-.s-close .photo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--night) 0,rgba(11,18,32,0) 60%)}
-.s-close .by{position:absolute;left:150px;bottom:64px;display:flex;align-items:center;gap:20px;font-size:24px;color:rgba(255,255,255,.55)}
-.s-close .by span{width:48px;height:3px;border-radius:2px;background:var(--hl-solid)}
-.s-close .by strong{color:#fff;font-weight:600}
+.s-close .by{position:absolute;left:150px;bottom:64px;display:flex;align-items:center;gap:20px;font-size:23px;color:var(--t3)}
+.s-close .by img:first-child{height:30px}
+.s-close .by img:nth-child(2){height:19px}
+.s-close .by strong{color:#fff;font-weight:600;margin-left:6px;padding-left:20px;border-left:1px solid var(--line)}
 
-/* Speaker notes overlay (N) */
-#notes{position:fixed;left:24px;right:24px;bottom:24px;max-height:40vh;overflow:auto;background:rgba(11,18,32,.94);color:#E9EDF3;border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:22px 26px;font:400 17px/1.55 var(--sans);z-index:6;display:none;white-space:pre-wrap}
+#notes{position:fixed;left:24px;right:24px;bottom:24px;max-height:40vh;overflow:auto;background:rgba(7,9,15,.96);color:#E6ECF7;border:1px solid rgba(10,235,255,.2);border-radius:18px;padding:22px 26px;font:400 17px/1.55 var(--sans);z-index:6;display:none;white-space:pre-wrap}
 #notes.on{display:block}
 </style>
 </head>
@@ -321,6 +325,7 @@ body{font-family:var(--sans);color:var(--t2);-webkit-font-smoothing:antialiased}
 <section class="slide dark s-title">
   <div class="photo"></div>
   <div class="copy">
+    <div class="logo rise d1"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></div>
     <p class="eb rise d1">Email list cleanup · 90 minutes</p>
     <h1 class="head rise d2">Your email list is <em>quietly losing you money.</em></h1>
     <p class="sub rise d3">Why lists go bad, what it's costing you, and the two-step fix that brings your opens, clicks and sales back.</p>
@@ -340,21 +345,21 @@ By the end of this you'll have one thing to do, a prompt that walks you through 
     <h2 class="head rise d2">One fix. <em>90 minutes.</em> Results inside a week.</h2>
     <div class="gets">
       <div class="get rise d3">
-        <div class="tile blue"><svg viewBox="0 0 64 64"><path d="M8 22l24 16 24-16"/><rect x="8" y="16" width="48" height="34" rx="6"/></svg></div>
+        <div class="tile"><svg viewBox="0 0 64 64"><path d="M8 22l24 16 24-16"/><rect x="8" y="16" width="48" height="34" rx="6"/></svg></div>
         <div><b>Open rates</b><span>more people see it</span></div>
       </div>
       <div class="get rise d4">
-        <div class="tile yellow"><svg viewBox="0 0 64 64"><path d="M20 10l26 26-12 2 7 15-6 3-7-15-8 8z"/></svg></div>
+        <div class="tile"><svg viewBox="0 0 64 64"><path d="M20 10l26 26-12 2 7 15-6 3-7-15-8 8z"/></svg></div>
         <div><b>Click rates</b><span>more people act on it</span></div>
       </div>
       <div class="get rise d5">
-        <div class="tile green"><svg viewBox="0 0 64 64"><path d="M8 48l16-16 10 10 20-22"/><path d="M42 20h12v12"/></svg></div>
+        <div class="tile"><svg viewBox="0 0 64 64"><path d="M8 48l16-16 10 10 20-22"/><path d="M42 20h12v12"/></svg></div>
         <div><b>Revenue</b><span>same emails, more money</span></div>
       </div>
     </div>
   </div>
   <p class="hand rise d6">No guarantees, your list is your list.<br>But I've never seen this one not help.</p>
-  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
+  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
   <script type="text/plain" class="notes">Here's the deal. I'm going to give you one simple thing to do. You can get it done in under 90 minutes, and you should see the difference in your opens and clicks within a week.
 
 I'm not promising specific numbers. Every list is different. But this is one of those fixes where the only question is how much it helps, not whether it helps.</script>
@@ -368,7 +373,7 @@ I'm not promising specific numbers. Every list is different. But this is one of 
     <h2 class="head rise d2">Email is a <em>decaying asset.</em></h2>
     <p class="sub rise d3">You own your list. But it doesn't appreciate, it depreciates. People change jobs, abandon inboxes, stop caring. <b>Most people never clean theirs.</b></p>
   </div>
-  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
+  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
   <script type="text/plain" class="notes">Here's the problem. Email is a decaying asset.
 
 The day someone joins your list is the day they care the most. From there it's all downhill. They change jobs. They stop checking that inbox. They forget who you are.
@@ -396,7 +401,7 @@ Everyone says email is the asset you own, not rent. True. But it's not appreciat
       </div>
     </div>
   </div>
-  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
+  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
   <script type="text/plain" class="notes">This is what it looks like. Year one, most of your list is alive. Year two, a chunk of it has gone quiet. Year three, even more.
 
 Take 100 subscribers. Even if you're a perfect emailer, about 23 of them go unresponsive by the end of year one. By the end of year two you're down to around 59 who still respond. It compounds, in the wrong direction. So if you've had your list for five years, it's very unlikely the people who joined back then are still reading.
@@ -415,47 +420,47 @@ And when results drop, what do people do? They blame the copy. They rewrite subj
   <div class="art rise d3">
     <svg viewBox="0 0 620 840" aria-hidden="true">
       <!-- body -->
-      <rect x="70" y="20" width="480" height="800" rx="36" fill="#fff" stroke="#0B1220" stroke-width="6"/>
-      <rect x="70" y="20" width="480" height="800" rx="36" fill="none" stroke="#0B1220" stroke-width="6" transform="translate(12 12)" opacity=".9"/>
-      <rect x="70" y="20" width="480" height="800" rx="36" fill="#fff" stroke="#0B1220" stroke-width="6"/>
+      <rect x="70" y="20" width="480" height="800" rx="36" fill="#0C1019" stroke="#DCE3F0" stroke-width="6"/>
+      <rect x="70" y="20" width="480" height="800" rx="36" fill="none" stroke="#DCE3F0" stroke-width="6" transform="translate(12 12)" opacity=".9"/>
+      <rect x="70" y="20" width="480" height="800" rx="36" fill="#0C1019" stroke="#DCE3F0" stroke-width="6"/>
       <!-- freezer -->
-      <line x1="70" y1="230" x2="550" y2="230" stroke="#0B1220" stroke-width="6"/>
-      <rect x="490" y="70" width="18" height="110" rx="9" fill="#0B1220"/>
+      <line x1="70" y1="230" x2="550" y2="230" stroke="#DCE3F0" stroke-width="6"/>
+      <rect x="490" y="70" width="18" height="110" rx="9" fill="#DCE3F0"/>
       <!-- fridge interior light -->
-      <rect x="100" y="256" width="420" height="534" rx="16" fill="#FFF8DE" stroke="#0B1220" stroke-width="4"/>
+      <rect x="100" y="256" width="420" height="534" rx="16" fill="#06143F" stroke="#DCE3F0" stroke-width="4"/>
       <!-- shelves -->
-      <line x1="100" y1="420" x2="520" y2="420" stroke="#0B1220" stroke-width="5"/>
-      <line x1="100" y1="590" x2="520" y2="590" stroke="#0B1220" stroke-width="5"/>
+      <line x1="100" y1="420" x2="520" y2="420" stroke="#DCE3F0" stroke-width="5"/>
+      <line x1="100" y1="590" x2="520" y2="590" stroke="#DCE3F0" stroke-width="5"/>
       <!-- shelf 1: fresh -->
-      <rect x="130" y="316" width="70" height="104" rx="14" fill="#DDF1DC" stroke="#0B1220" stroke-width="4"/>
-      <rect x="146" y="300" width="38" height="20" rx="5" fill="#fff" stroke="#0B1220" stroke-width="4"/>
-      <rect x="226" y="350" width="120" height="70" rx="14" fill="#DCE8FB" stroke="#0B1220" stroke-width="4"/>
-      <path d="M380 420 v-80 l26 -26 h28 l26 26 v80 z" fill="#fff" stroke="#0B1220" stroke-width="4" stroke-linejoin="round"/>
-      <line x1="380" y1="368" x2="460" y2="368" stroke="#0B1220" stroke-width="4"/>
+      <rect x="130" y="316" width="70" height="104" rx="14" fill="#0181FC" stroke="#DCE3F0" stroke-width="4"/>
+      <rect x="146" y="300" width="38" height="20" rx="5" fill="#0C1019" stroke="#DCE3F0" stroke-width="4"/>
+      <rect x="226" y="350" width="120" height="70" rx="14" fill="#0AEBFF" stroke="#DCE3F0" stroke-width="4"/>
+      <path d="M380 420 v-80 l26 -26 h28 l26 26 v80 z" fill="#0C1019" stroke="#DCE3F0" stroke-width="4" stroke-linejoin="round"/>
+      <line x1="380" y1="368" x2="460" y2="368" stroke="#DCE3F0" stroke-width="4"/>
       <!-- shelf 2: going off -->
-      <rect x="128" y="500" width="110" height="90" rx="14" fill="#E4E8C9" stroke="#0B1220" stroke-width="4"/>
-      <path d="M150 482c6-10-6-14 0-24M182 482c6-10-6-14 0-24M214 482c6-10-6-14 0-24" fill="none" stroke="#6E8B3D" stroke-width="4" stroke-linecap="round"/>
-      <rect x="266" y="470" width="66" height="120" rx="14" fill="#fff" stroke="#0B1220" stroke-width="4"/>
-      <rect x="282" y="454" width="34" height="20" rx="5" fill="#fff" stroke="#0B1220" stroke-width="4"/>
-      <ellipse cx="420" cy="560" rx="70" ry="30" fill="#C9D3A8" stroke="#0B1220" stroke-width="4"/>
-      <circle cx="400" cy="552" r="6" fill="#6E8B3D"/><circle cx="430" cy="566" r="5" fill="#6E8B3D"/><circle cx="448" cy="548" r="4" fill="#6E8B3D"/>
-      <path d="M392 512c6-10-6-14 0-24M432 506c6-10-6-14 0-24" fill="none" stroke="#6E8B3D" stroke-width="4" stroke-linecap="round"/>
+      <rect x="128" y="500" width="110" height="90" rx="14" fill="#3E4A27" stroke="#DCE3F0" stroke-width="4"/>
+      <path d="M150 482c6-10-6-14 0-24M182 482c6-10-6-14 0-24M214 482c6-10-6-14 0-24" fill="none" stroke="#9DBB55" stroke-width="4" stroke-linecap="round"/>
+      <rect x="266" y="470" width="66" height="120" rx="14" fill="#0C1019" stroke="#DCE3F0" stroke-width="4"/>
+      <rect x="282" y="454" width="34" height="20" rx="5" fill="#0C1019" stroke="#DCE3F0" stroke-width="4"/>
+      <ellipse cx="420" cy="560" rx="70" ry="30" fill="#46532C" stroke="#DCE3F0" stroke-width="4"/>
+      <circle cx="400" cy="552" r="6" fill="#9DBB55"/><circle cx="430" cy="566" r="5" fill="#9DBB55"/><circle cx="448" cy="548" r="4" fill="#9DBB55"/>
+      <path d="M392 512c6-10-6-14 0-24M432 506c6-10-6-14 0-24" fill="none" stroke="#9DBB55" stroke-width="4" stroke-linecap="round"/>
       <!-- shelf 3: rotten -->
-      <rect x="128" y="660" width="140" height="100" rx="14" fill="#C9D3A8" stroke="#0B1220" stroke-width="4"/>
-      <path d="M150 640c6-10-6-14 0-24M190 640c6-10-6-14 0-24M230 640c6-10-6-14 0-24" fill="none" stroke="#6E8B3D" stroke-width="4" stroke-linecap="round"/>
-      <path d="M160 700l18 18M178 700l-18 18M216 700l18 18M234 700l-18 18" stroke="#0B1220" stroke-width="4" stroke-linecap="round"/>
-      <rect x="296" y="690" width="90" height="70" rx="12" fill="#D9D2B8" stroke="#0B1220" stroke-width="4"/>
-      <rect x="410" y="650" width="80" height="110" rx="14" fill="#C9D3A8" stroke="#0B1220" stroke-width="4"/>
-      <path d="M430 630c6-10-6-14 0-24M468 630c6-10-6-14 0-24" fill="none" stroke="#6E8B3D" stroke-width="4" stroke-linecap="round"/>
+      <rect x="128" y="660" width="140" height="100" rx="14" fill="#46532C" stroke="#DCE3F0" stroke-width="4"/>
+      <path d="M150 640c6-10-6-14 0-24M190 640c6-10-6-14 0-24M230 640c6-10-6-14 0-24" fill="none" stroke="#9DBB55" stroke-width="4" stroke-linecap="round"/>
+      <path d="M160 700l18 18M178 700l-18 18M216 700l18 18M234 700l-18 18" stroke="#DCE3F0" stroke-width="4" stroke-linecap="round"/>
+      <rect x="296" y="690" width="90" height="70" rx="12" fill="#4A4636" stroke="#DCE3F0" stroke-width="4"/>
+      <rect x="410" y="650" width="80" height="110" rx="14" fill="#46532C" stroke="#DCE3F0" stroke-width="4"/>
+      <path d="M430 630c6-10-6-14 0-24M468 630c6-10-6-14 0-24" fill="none" stroke="#9DBB55" stroke-width="4" stroke-linecap="round"/>
       <!-- flies -->
-      <g fill="#0B1220"><circle cx="356" cy="640" r="4"/><circle cx="372" cy="626" r="3"/><circle cx="512" cy="620" r="3.5"/></g>
-      <path d="M350 646c-10 4-14-6-8-10M378 620c8-6 14 2 8 8" fill="none" stroke="#0B1220" stroke-width="2" stroke-linecap="round"/>
+      <g fill="#DCE3F0"><circle cx="356" cy="640" r="4"/><circle cx="372" cy="626" r="3"/><circle cx="512" cy="620" r="3.5"/></g>
+      <path d="M350 646c-10 4-14-6-8-10M378 620c8-6 14 2 8 8" fill="none" stroke="#DCE3F0" stroke-width="2" stroke-linecap="round"/>
     </svg>
     <span class="tag ok" style="left:-170px;top:320px">opened last week →</span>
     <span class="tag bad" style="left:-238px;top:500px">hasn't opened in a year →</span>
     <span class="tag bad" style="left:-210px;top:680px">dead since 2022 →</span>
   </div>
-  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
+  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
   <script type="text/plain" class="notes">Think about your list like a fridge.
 
 Imagine you keep buying groceries and putting them in, and you never throw anything out. What happens? It starts to stink. And the rotten stuff doesn't stay on its own shelf. It ruins the fresh food too.
@@ -470,24 +475,24 @@ That's exactly what dead subscribers do to your list. They don't just sit there.
     <h2 class="head rise d2">Dead emails drag <em>everything</em> down.</h2>
     <div class="grid4">
       <div class="g4 rise d3"><span class="pill">Visibility</span>
-        <div class="tile blue"><svg viewBox="0 0 64 64"><path d="M8 36l8-22h32l8 22v14H8z"/><path d="M8 36h14l4 6h12l4-6h14"/></svg></div>
+        <div class="tile"><svg viewBox="0 0 64 64"><path d="M8 36l8-22h32l8 22v14H8z"/><path d="M8 36h14l4 6h12l4-6h14"/></svg></div>
         <div><h3>Less inbox</h3><p>Your emails stop reaching the inbox. People never even see them.</p></div>
       </div>
       <div class="g4 rise d4"><span class="pill">Reputation</span>
-        <div class="tile pink"><svg viewBox="0 0 64 64"><path d="M32 8l26 46H6z"/><path d="M32 26v12"/><circle class="f" cx="32" cy="46" r="3" stroke="none" fill="#0B1220"/></svg></div>
+        <div class="tile pink"><svg viewBox="0 0 64 64"><path d="M32 8l26 46H6z"/><path d="M32 26v12"/><circle class="f" cx="32" cy="46" r="3" stroke="none"/></svg></div>
         <div><h3>Spam folder</h3><p>People who forgot you mark you as spam. Your sender reputation tanks.</p></div>
       </div>
       <div class="g4 rise d5"><span class="pill">Deliverability</span>
-        <div class="tile yellow"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="22"/><path d="M16 16l32 32"/></svg></div>
+        <div class="tile"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="22"/><path d="M16 16l32 32"/></svg></div>
         <div><h3>Blacklisted</h3><p>Email providers start flagging your domain. Now it's not one email, it's all of them.</p></div>
       </div>
       <div class="g4 rise d6"><span class="pill">Phantom list</span>
-        <div class="tile green"><svg viewBox="0 0 64 64"><path d="M22 18L10 30l12 12"/><path d="M10 30h28a14 14 0 0 1 0 28h-6"/></svg></div>
+        <div class="tile"><svg viewBox="0 0 64 64"><path d="M22 18L10 30l12 12"/><path d="M10 30h28a14 14 0 0 1 0 28h-6"/></svg></div>
         <div><h3>More bounces</h3><p>Dead addresses bounce your emails back, and every bounce makes the rest worse.</p></div>
       </div>
     </div>
   </div>
-  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
+  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
   <script type="text/plain" class="notes">Here's what's happening to your list right now, whether you can see it or not.
 
 One. Less inbox. Your emails just stop landing. People don't see them.
@@ -506,9 +511,9 @@ Four. Bounces. Dead addresses bounce, and every bounce tells Gmail you don't tak
   </div>
   <div class="rise d3"><div class="cyc">
     <svg viewBox="0 0 1100 760" aria-hidden="true">
-      <defs><marker id="ah" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0B1220"/></marker></defs>
-      <circle cx="550" cy="380" r="270" fill="none" stroke="rgba(11,18,32,.08)" stroke-width="40"/>
-      <g class="spin"><circle cx="550" cy="380" r="200" fill="none" stroke="rgba(11,18,32,.18)" stroke-width="3" stroke-dasharray="4 18" stroke-linecap="round"/></g>
+      <defs><marker id="ah" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#FFFFFF"/></marker></defs>
+      <circle cx="550" cy="380" r="270" fill="none" stroke="rgba(1,129,252,.10)" stroke-width="40"/>
+      <g class="spin"><circle cx="550" cy="380" r="200" fill="none" stroke="rgba(10,235,255,.25)" stroke-width="3" stroke-dasharray="4 18" stroke-linecap="round"/></g>
       <path class="arc" marker-end="url(#ah)" d="M596.9 114.1A270 270 0 0 1 788.4 253.2"/>
       <path class="arc" marker-end="url(#ah)" d="M817.4 342.4A270 270 0 0 1 744.2 567.6"/>
       <path class="arc" marker-end="url(#ah)" d="M668.4 622.7A270 270 0 0 1 431.6 622.7"/>
@@ -528,7 +533,7 @@ Four. Bounces. Dead addresses bounce, and every bounce tells Gmail you don't tak
     <div class="node" style="left:293px;top:297px"><svg viewBox="0 0 64 64"><path d="M32 8v48"/><path d="M42 18c-2-4-6-6-10-6-6 0-10 3-10 8 0 12 22 6 22 18 0 5-5 8-11 8-5 0-10-2-12-6"/></svg></div>
     <span class="lb l" style="right:877px;top:250px">Revenue drops.<br>You <b>lose money.</b></span>
   </div></div>
-  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
+  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
   <script type="text/plain" class="notes">And here's the part people miss. It's a loop.
 
 Dead emails pile up. Your open rates drop and your bounces go up. The providers see that and start flagging you as spam. Now even your good subscribers, the ones who'd actually buy, stop getting your emails. Revenue drops. And meanwhile the list keeps aging, so it starts over, worse.
@@ -556,7 +561,7 @@ And it's speeding up. Spam filters run on AI now and they get better every month
     </div>
   </div>
   <p class="hand rise d6">I'll take the 1,000. Every time.</p>
-  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
+  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
   <script type="text/plain" class="notes">Quick question. Would you rather have 1,000 subscribers who open and click, or 50,000 who never even see your emails?
 
 Everyone says the 1,000. But then they look at their own list and can't bring themselves to delete anyone, because the big number feels good.
@@ -565,7 +570,8 @@ The big number is a vanity metric. It's ego. You have to stop being married to t
 </section>
 
 <!-- 9 · Chapter: the fix -->
-<section class="slide dark s-fix">
+<section class="slide s-fix">
+  <div class="glow rise d2"><img src="assets/brandridge-mark.svg" alt=""></div>
   <div class="copy">
     <p class="eb rise d1">Part 2 · The good news</p>
     <h2 class="head rise d2">We fix all of this with <em>two things.</em></h2>
@@ -575,7 +581,7 @@ The big number is a vanity metric. It's ego. You have to stop being married to t
       <div><i>2</i>Remove whoever doesn't answer</div>
     </div>
   </div>
-  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
+  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
   <script type="text/plain" class="notes">Good news. All of this is fixable, and it's two things. Each one is under 30 minutes of actual work.
 
 Thing one, give the quiet people a chance to come back. Thing two, remove the ones who don't.</script>
@@ -590,13 +596,13 @@ Thing one, give the quiet people a chance to come back. Thing two, remove the on
     <p class="sub rise d3">Three short emails to everyone who hasn't opened or clicked in 90 days. One question:</p>
     <p class="quote rise d4">"Hey, do you still want<br>to hear from me?"</p>
   </div>
-  <div class="inbox rise d4">
+  <div class="panel inbox rise d4">
     <div class="bar"><i></i><i></i><i></i><span>To: inactive · 90 days</span></div>
     <div class="mail rise d5"><span class="no">1</span><div><b>We miss you</b><p>Still want these? Click here and you stay on the list.</p></div></div>
     <div class="mail rise d6"><span class="no">2</span><div><b>Last chance</b><p>Haven't heard from you. One click keeps you subscribed.</p></div></div>
     <div class="mail rise d7"><span class="no">3</span><div><b>Final notice</b><p>I'm taking you off the list. No hard feelings.</p></div></div>
   </div>
-  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
+  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
   <script type="text/plain" class="notes">Thing one. Run a re-engagement campaign.
 
 Pull everyone who hasn't opened or clicked in the last 90 days. Send them three short emails. That's it.
@@ -615,7 +621,7 @@ Some of them will come back, and those people are gold, because they just told y
     <p class="rm rise d3">Didn't respond to any of the three? <b>Remove them.</b></p>
     <p class="sub rise d4">Not "maybe later." Not a separate list you keep emailing. Gone.</p>
   </div>
-  <div class="ba rise d4">
+  <div class="panel ba rise d4">
     <div class="cap"><span>Example list</span><span><b>Before</b> → After cleanup</span></div>
     <div class="row">
       <h4>Subscribers</h4>
@@ -639,7 +645,7 @@ Some of them will come back, and those people are gold, because they just told y
     </div>
     <p class="note">Illustrative example. Your numbers depend on your list.</p>
   </div>
-  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
+  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
   <script type="text/plain" class="notes">Thing two. Sunset the non-responders. If they didn't respond to any of the three emails, remove them.
 
 Here's an example of what that looks like. A 50,000 person list with an 8% open rate, and almost half the emails going to spam. After the cleanup it's 12,000 people. That sounds scary. But the open rate goes to 35%, 92% of emails land in the inbox, and revenue goes up.
@@ -661,7 +667,7 @@ You lost 38,000 people who weren't reading anyway, and the ones left finally see
       <li class="rise d8"><i><svg viewBox="0 0 64 64"><path d="M14 34l12 12 24-26"/></svg></i><span>You stop <b>paying</b> for dead contacts</span></li>
     </ul>
   </div>
-  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
+  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
   <script type="text/plain" class="notes">So when you do this: more of your emails land in the inbox. Opens and clicks go up. You get more sales out of the exact same emails. Your sender reputation starts to recover. Your good subscribers actually see what you send. And most email platforms charge by contact, so you stop paying to email people who left.</script>
 </section>
 
@@ -677,7 +683,7 @@ You lost 38,000 people who weren't reading anyway, and the ones left finally see
     </ol>
   </div>
   <div class="tip rise d6"><em>Stuck?</em><span><b>Screenshot your screen and paste it in.</b> The AI will walk you through every click in your email platform.</span></div>
-  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
+  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
   <script type="text/plain" class="notes">Here's your next step. Block 90 minutes. Heads down.
 
 Copy the prompt on the next slide. Paste it into ChatGPT or Claude. Follow the steps it gives you.
@@ -702,7 +708,7 @@ If you get stuck anywhere, take a screenshot of what you're looking at and paste
 Keep it simple. I'm not a technical person. Give me step-by-step instructions I can finish in under 15 minutes per step.</pre>
     </div>
   </div>
-  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
+  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
   <script type="text/plain" class="notes">Here's the prompt. Swap in whatever you use: GoHighLevel, Mailchimp, Klaviyo, ConvertKit, doesn't matter. It adapts.
 
 It'll build the 90-day segment with you, write the three emails, and show you how to remove the people who don't respond.</script>
@@ -718,14 +724,14 @@ It'll build the 90-day segment with you, write the three emails, and show you ho
         <p class="sub rise d3">Then check again in a week, same email, same day of the week.</p>
         <p class="hand rise d4">Bring me your "after."<br>I want to see the jump.</p>
       </div>
-      <div class="card-sc rise d3">
+      <div class="panel card-sc rise d3">
         <div class="cap">Your scorecard</div>
         <div class="row"><b>Open rate</b><div class="fill"><div>Before<span></span></div><div>After<span></span></div></div></div>
         <div class="row"><b>Click rate</b><div class="fill"><div>Before<span></span></div><div>After<span></span></div></div></div>
       </div>
     </div>
   </div>
-  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
+  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
   <script type="text/plain" class="notes">Before you touch anything, write down your current open rate and click rate. Then do the cleanup, and check again a week later.
 
 Bring me your after numbers. I want to see them.</script>
@@ -736,7 +742,7 @@ Bring me your after numbers. I want to see them.</script>
   <div class="pad">
     <p class="eb rise d1">Every reason you haven't done this yet</p>
     <h2 class="head rise d2">The excuses, <em>handled.</em></h2>
-    <div class="ex rise d3">
+    <div class="panel ex rise d3">
       <div class="r hd"><div>What you're telling yourself</div><div>The truth</div></div>
       <div class="r"><div>"I don't want to lose subscribers."</div><div>You're not losing anyone. You're removing people who already left.</div></div>
       <div class="r"><div>"My list took years to build."</div><div>Revenue doesn't care how big your list is or how long it took.</div></div>
@@ -748,7 +754,7 @@ Bring me your after numbers. I want to see them.</script>
       <div class="r"><div>"My open rates are already good."</div><div>Your list can't be too clean. <b>Prune it anyway</b> and make more from less.</div></div>
     </div>
   </div>
-  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
+  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
   <script type="text/plain" class="notes">Let me knock out the excuses, because I've heard all of them.
 
 "I don't want to lose subscribers." You're not losing them. They already left. You're just making it official.
@@ -762,15 +768,15 @@ Bring me your after numbers. I want to see them.</script>
 </section>
 
 <!-- 17 · Close -->
-<section class="slide dark s-close">
-  <div class="photo"></div>
+<section class="slide s-close">
+  <div class="mark rise d3"><img src="assets/brandridge-mark.svg" alt=""></div>
   <div class="copy">
     <p class="eb rise d1">That's it</p>
     <h2 class="head rise d2">Two things. <em>More money from email.</em></h2>
     <p class="sub rise d3">Re-engage the quiet ones. Remove the ones who don't answer. Ninety minutes, this week.</p>
     <span class="go rise d4">Do It This Week<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
   </div>
-  <p class="by rise d5"><span></span><strong>Javier Martinez</strong></p>
+  <p class="by rise d5"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"><strong>Javier Martinez</strong></p>
   <script type="text/plain" class="notes">That's it. Two things. Re-engage the people who've gone quiet, and remove the ones who don't come back.
 
 Ninety minutes. Do it this week, and check your numbers next week. This is one of the easiest wins you'll get all year.</script>
