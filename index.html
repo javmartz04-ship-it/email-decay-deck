@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Clean Your Email List · Brandridge</title>
+<title>Clean Your Email List · Javier Martinez</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* Brandridge: sampled from the logo */
+  /* Palette: blue gradient + navy */
   --blue:#001DFB;      /* gradient start, deep */
   --mid:#0181FC;       /* gradient middle */
   --cyan:#0AEBFF;      /* gradient end */
@@ -87,7 +87,7 @@ body{font-family:var(--sans);color:var(--t2);-webkit-font-smoothing:antialiased}
 .s-title .logo img:first-child{height:64px}
 .s-title .logo img:last-child{height:40px}
 .s-title .copy{position:absolute;left:150px;top:0;bottom:0;width:1060px;display:flex;flex-direction:column;justify-content:center}
-.s-title .eb{margin-top:70px}
+.s-title .eb{margin-top:0}
 .s-title .head{font-size:124px;line-height:.98;margin-top:34px}
 .s-title .head em{display:block;margin-top:8px}
 .s-title .sub{font-size:32px;max-width:860px;margin-top:40px}
@@ -311,7 +311,10 @@ body{font-family:var(--sans);color:var(--t2);-webkit-font-smoothing:antialiased}
 .s-close .by{position:absolute;left:150px;bottom:64px;display:flex;align-items:center;gap:20px;font-size:23px;color:var(--t3)}
 .s-close .by img:first-child{height:30px}
 .s-close .by img:nth-child(2){height:19px}
-.s-close .by strong{color:#fff;font-weight:600;margin-left:6px;padding-left:20px;border-left:1px solid var(--line)}
+.s-close .by span{width:40px;height:2px;border-radius:2px;background:var(--grad)}
+.s-close .by strong{color:#fff;font-weight:600}
+.s-close .photo{position:absolute;right:0;top:0;bottom:0;width:860px;background:url(assets/fridge-night.jpg) 40% 60%/cover;opacity:.7}
+.s-close .photo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#000 0,rgba(0,0,0,0) 60%)}
 
 #notes{position:fixed;left:24px;right:24px;bottom:24px;max-height:40vh;overflow:auto;background:rgba(7,9,15,.96);color:#E6ECF7;border:1px solid rgba(10,235,255,.2);border-radius:18px;padding:22px 26px;font:400 17px/1.55 var(--sans);z-index:6;display:none;white-space:pre-wrap}
 #notes.on{display:block}
@@ -325,8 +328,7 @@ body{font-family:var(--sans);color:var(--t2);-webkit-font-smoothing:antialiased}
 <section class="slide dark s-title">
   <div class="photo"></div>
   <div class="copy">
-    <div class="logo rise d1"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></div>
-    <p class="eb rise d1">Email list cleanup · 90 minutes</p>
+        <p class="eb rise d1">Email list cleanup</p>
     <h1 class="head rise d2">Your email list is <em>quietly losing you money.</em></h1>
     <p class="sub rise d3">Why lists go bad, what it's costing you, and the two-step fix that brings your opens, clicks and sales back.</p>
   </div>
@@ -359,7 +361,7 @@ By the end of this you'll have one thing to do, a prompt that walks you through 
     </div>
   </div>
   <p class="hand rise d6">No guarantees, your list is your list.<br>But I've never seen this one not help.</p>
-  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
+  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
   <script type="text/plain" class="notes">Here's the deal. I'm going to give you one simple thing to do. You can get it done in under 90 minutes, and you should see the difference in your opens and clicks within a week.
 
 I'm not promising specific numbers. Every list is different. But this is one of those fixes where the only question is how much it helps, not whether it helps.</script>
@@ -373,7 +375,7 @@ I'm not promising specific numbers. Every list is different. But this is one of 
     <h2 class="head rise d2">Email is a <em>decaying asset.</em></h2>
     <p class="sub rise d3">You own your list. But it doesn't appreciate, it depreciates. People change jobs, abandon inboxes, stop caring. <b>Most people never clean theirs.</b></p>
   </div>
-  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
+  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
   <script type="text/plain" class="notes">Here's the problem. Email is a decaying asset.
 
 The day someone joins your list is the day they care the most. From there it's all downhill. They change jobs. They stop checking that inbox. They forget who you are.
@@ -401,7 +403,7 @@ Everyone says email is the asset you own, not rent. True. But it's not appreciat
       </div>
     </div>
   </div>
-  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
+  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
   <script type="text/plain" class="notes">This is what it looks like. Year one, most of your list is alive. Year two, a chunk of it has gone quiet. Year three, even more.
 
 Take 100 subscribers. Even if you're a perfect emailer, about 23 of them go unresponsive by the end of year one. By the end of year two you're down to around 59 who still respond. It compounds, in the wrong direction. So if you've had your list for five years, it's very unlikely the people who joined back then are still reading.
@@ -460,7 +462,7 @@ And when results drop, what do people do? They blame the copy. They rewrite subj
     <span class="tag bad" style="left:-238px;top:500px">hasn't opened in a year →</span>
     <span class="tag bad" style="left:-210px;top:680px">dead since 2022 →</span>
   </div>
-  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
+  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
   <script type="text/plain" class="notes">Think about your list like a fridge.
 
 Imagine you keep buying groceries and putting them in, and you never throw anything out. What happens? It starts to stink. And the rotten stuff doesn't stay on its own shelf. It ruins the fresh food too.
@@ -492,7 +494,7 @@ That's exactly what dead subscribers do to your list. They don't just sit there.
       </div>
     </div>
   </div>
-  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
+  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
   <script type="text/plain" class="notes">Here's what's happening to your list right now, whether you can see it or not.
 
 One. Less inbox. Your emails just stop landing. People don't see them.
@@ -533,7 +535,7 @@ Four. Bounces. Dead addresses bounce, and every bounce tells Gmail you don't tak
     <div class="node" style="left:293px;top:297px"><svg viewBox="0 0 64 64"><path d="M32 8v48"/><path d="M42 18c-2-4-6-6-10-6-6 0-10 3-10 8 0 12 22 6 22 18 0 5-5 8-11 8-5 0-10-2-12-6"/></svg></div>
     <span class="lb l" style="right:877px;top:250px">Revenue drops.<br>You <b>lose money.</b></span>
   </div></div>
-  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
+  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
   <script type="text/plain" class="notes">And here's the part people miss. It's a loop.
 
 Dead emails pile up. Your open rates drop and your bounces go up. The providers see that and start flagging you as spam. Now even your good subscribers, the ones who'd actually buy, stop getting your emails. Revenue drops. And meanwhile the list keeps aging, so it starts over, worse.
@@ -561,7 +563,7 @@ And it's speeding up. Spam filters run on AI now and they get better every month
     </div>
   </div>
   <p class="hand rise d6">I'll take the 1,000. Every time.</p>
-  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
+  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
   <script type="text/plain" class="notes">Quick question. Would you rather have 1,000 subscribers who open and click, or 50,000 who never even see your emails?
 
 Everyone says the 1,000. But then they look at their own list and can't bring themselves to delete anyone, because the big number feels good.
@@ -571,7 +573,6 @@ The big number is a vanity metric. It's ego. You have to stop being married to t
 
 <!-- 9 · Chapter: the fix -->
 <section class="slide s-fix">
-  <div class="glow rise d2"><img src="assets/brandridge-mark.svg" alt=""></div>
   <div class="copy">
     <p class="eb rise d1">Part 2 · The good news</p>
     <h2 class="head rise d2">We fix all of this with <em>two things.</em></h2>
@@ -581,7 +582,7 @@ The big number is a vanity metric. It's ego. You have to stop being married to t
       <div><i>2</i>Remove whoever doesn't answer</div>
     </div>
   </div>
-  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
+  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
   <script type="text/plain" class="notes">Good news. All of this is fixable, and it's two things. Each one is under 30 minutes of actual work.
 
 Thing one, give the quiet people a chance to come back. Thing two, remove the ones who don't.</script>
@@ -602,7 +603,7 @@ Thing one, give the quiet people a chance to come back. Thing two, remove the on
     <div class="mail rise d6"><span class="no">2</span><div><b>Last chance</b><p>Haven't heard from you. One click keeps you subscribed.</p></div></div>
     <div class="mail rise d7"><span class="no">3</span><div><b>Final notice</b><p>I'm taking you off the list. No hard feelings.</p></div></div>
   </div>
-  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
+  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
   <script type="text/plain" class="notes">Thing one. Run a re-engagement campaign.
 
 Pull everyone who hasn't opened or clicked in the last 90 days. Send them three short emails. That's it.
@@ -645,7 +646,7 @@ Some of them will come back, and those people are gold, because they just told y
     </div>
     <p class="note">Illustrative example. Your numbers depend on your list.</p>
   </div>
-  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
+  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
   <script type="text/plain" class="notes">Thing two. Sunset the non-responders. If they didn't respond to any of the three emails, remove them.
 
 Here's an example of what that looks like. A 50,000 person list with an 8% open rate, and almost half the emails going to spam. After the cleanup it's 12,000 people. That sounds scary. But the open rate goes to 35%, 92% of emails land in the inbox, and revenue goes up.
@@ -667,7 +668,7 @@ You lost 38,000 people who weren't reading anyway, and the ones left finally see
       <li class="rise d8"><i><svg viewBox="0 0 64 64"><path d="M14 34l12 12 24-26"/></svg></i><span>You stop <b>paying</b> for dead contacts</span></li>
     </ul>
   </div>
-  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
+  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
   <script type="text/plain" class="notes">So when you do this: more of your emails land in the inbox. Opens and clicks go up. You get more sales out of the exact same emails. Your sender reputation starts to recover. Your good subscribers actually see what you send. And most email platforms charge by contact, so you stop paying to email people who left.</script>
 </section>
 
@@ -683,7 +684,7 @@ You lost 38,000 people who weren't reading anyway, and the ones left finally see
     </ol>
   </div>
   <div class="tip rise d6"><em>Stuck?</em><span><b>Screenshot your screen and paste it in.</b> The AI will walk you through every click in your email platform.</span></div>
-  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
+  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
   <script type="text/plain" class="notes">Here's your next step. Block 90 minutes. Heads down.
 
 Copy the prompt on the next slide. Paste it into ChatGPT or Claude. Follow the steps it gives you.
@@ -708,7 +709,7 @@ If you get stuck anywhere, take a screenshot of what you're looking at and paste
 Keep it simple. I'm not a technical person. Give me step-by-step instructions I can finish in under 15 minutes per step.</pre>
     </div>
   </div>
-  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
+  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
   <script type="text/plain" class="notes">Here's the prompt. Swap in whatever you use: GoHighLevel, Mailchimp, Klaviyo, ConvertKit, doesn't matter. It adapts.
 
 It'll build the 90-day segment with you, write the three emails, and show you how to remove the people who don't respond.</script>
@@ -731,7 +732,7 @@ It'll build the 90-day segment with you, write the three emails, and show you ho
       </div>
     </div>
   </div>
-  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
+  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
   <script type="text/plain" class="notes">Before you touch anything, write down your current open rate and click rate. Then do the cleanup, and check again a week later.
 
 Bring me your after numbers. I want to see them.</script>
@@ -754,7 +755,7 @@ Bring me your after numbers. I want to see them.</script>
       <div class="r"><div>"My open rates are already good."</div><div>Your list can't be too clean. <b>Prune it anyway</b> and make more from less.</div></div>
     </div>
   </div>
-  <div class="foot"><span class="brand"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"></span><span class="n"></span></div>
+  <div class="foot"><span>Javier Martinez</span><span class="n"></span></div>
   <script type="text/plain" class="notes">Let me knock out the excuses, because I've heard all of them.
 
 "I don't want to lose subscribers." You're not losing them. They already left. You're just making it official.
@@ -769,14 +770,14 @@ Bring me your after numbers. I want to see them.</script>
 
 <!-- 17 · Close -->
 <section class="slide s-close">
-  <div class="mark rise d3"><img src="assets/brandridge-mark.svg" alt=""></div>
+  <div class="photo"></div>
   <div class="copy">
     <p class="eb rise d1">That's it</p>
     <h2 class="head rise d2">Two things. <em>More money from email.</em></h2>
     <p class="sub rise d3">Re-engage the quiet ones. Remove the ones who don't answer. Ninety minutes, this week.</p>
     <span class="go rise d4">Do It This Week<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
   </div>
-  <p class="by rise d5"><img src="assets/brandridge-mark.svg" alt=""><img src="assets/brandridge-word.svg" alt="Brandridge"><strong>Javier Martinez</strong></p>
+  <p class="by rise d5"><span></span><strong>Javier Martinez</strong></p>
   <script type="text/plain" class="notes">That's it. Two things. Re-engage the people who've gone quiet, and remove the ones who don't come back.
 
 Ninety minutes. Do it this week, and check your numbers next week. This is one of the easiest wins you'll get all year.</script>

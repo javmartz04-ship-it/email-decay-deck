@@ -21,3 +21,11 @@
 - `.rise` sets `transform:none` on active slides, so a `transform:scale()` on the same element silently did nothing.
   Put scale on a child of the `.rise` wrapper.
 - Bold spans inside a `display:flex` table cell become separate flex items and lose their spaces. Use block.
+
+## v2 · Brandridge brand pass (2026-10-14)
+Javier sent his Brandridge logo: "Use my premium brand colors, make it super premium."
+- Colors sampled from the logo: #001DFB → #0181FC → #0AEBFF, stripe navy #030D30, black, white.
+- Logo traced to SVG with potrace (6x upscale, blue channel threshold; silhouette in navy + gradient body on top so the
+  ridge stripe stays navy on any ground). Note potrace's y-flip: the gradient needs x1=0 y1=0 x2=1 y2=1 to run bottom-left → top-right.
+- Whiteboard v1 kept locally as index.v1-whiteboard.html (gitignored).
+- Bug: `.rise` owns `transform`, so `translateY(-50%)` centering on a rising element is dropped. Position with top instead.
